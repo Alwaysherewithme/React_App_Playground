@@ -2,13 +2,26 @@ import React, { Component } from 'react';
 import PropTypes_wm from 'prop-types';
 
 export default class Home extends Component {
+
+  constructor(props) {
+    super(props);
+    this.age = this.props.age;
+  }
+
+  addAges() {
+    this.age += 3;
+    console.log(this);
+  }
+
   render() {
     let content = "";
     if(true){
       content = "Condition is true caused by 'if' !";
     }
-    console.log("Home组件中接收到父组件App组件传来的属性：")
-    console.log(this.props)
+
+    console.log("Home组件中接收到父组件App组件传来的属性：");
+    console.log(this.props);
+
     return (
         <div className="container">
           <div className="row">
@@ -24,6 +37,11 @@ export default class Home extends Component {
               <h3>二、通过Props传递数据</h3>
               <h5>App组件属性传递给Home组件</h5>
               <p>name: {this.props.name}; age: {this.props.age}</p>
+              { /*<button onClick={this.addAges.bind(this)} className="btn btn-primary">
+                    Make me 3 years older</button> // 正确写法，也可写成以下形式*/ }
+              <button onClick={() => {this.addAges()}} className="btn btn-primary">
+                    Make me 3 years older</button>
+              
               <p>hobbies:</p>
               <ul>
                 {this.props.user.hobbies.map((hobby, i) => <li key={i}>{hobby}</li>)}
