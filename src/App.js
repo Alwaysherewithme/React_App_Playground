@@ -8,6 +8,10 @@ import './App.css';
 
 class App extends Component {
   render() {
+    const user = {
+      name: "App组件内定义的对象user-name",
+      hobbies: ["Sports", "Reading", "Travel"]
+    }
     return (
       <div>
         <div className="App">
@@ -33,7 +37,12 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-xs-1 col-xs-offset-11">
-              <Home />
+              <Home name={"Home组件-name"} age={16} user={user}>
+                <div>
+                  <i>&lt;Home&gt;组件的子组件1</i>
+                  <b>&lt;Home&gt;组件的字组件2</b>
+                </div>
+              </Home>
             </div>
           </div>
         </div>
