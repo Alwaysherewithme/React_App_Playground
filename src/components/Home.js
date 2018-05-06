@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes_wm from 'prop-types';
 
+// React创建组件方式二 ———— ES6创建组件: React.Component
 export default class Home extends Component {
 
   constructor(props) {
     super(props);
     //this.age = this.props.age;
     this.state = {
-      age: props.initialAge_wm
+      age: props.initialAge_wm,
+      status: 0
     }
+    setTimeout(() => {
+      this.setState({
+        status: 1
+      })
+    },3000)
   }
 
   onAddAges_wm() {
@@ -43,7 +50,8 @@ export default class Home extends Component {
               <h3>二、通过Props传递数据</h3>
               <h5>★ App组件属性传递给Home组件的属性</h5>
               <p>name: {this.props.name}; initialAge_wm: {this.props.initialAge_wm}</p>
-              <h5>★ Home组件内定义的属性age: {this.state.age}</h5>
+              <h5>★ Home组件内定义的属性</h5>
+              <p>age: {this.state.age}; status（刷新页面三秒后变成1，重新render()这个p标签，return之上的console.log()也再次执行了？）: {this.state.status}</p>
               { /*<button onClick={this.onAddAges_wm.bind(this)} className="btn btn-primary">
                     Make me 3 years older</button> // 正确写法，也可写成以下形式*/ }
               <button onClick={() => {this.onAddAges_wm()}} className="btn btn-primary">
