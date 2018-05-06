@@ -37,7 +37,7 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-xs-1 col-xs-offset-11">
-              <Home name={"Home组件-name"} age={16} user={user}>
+              <Home name={"Home组件-name"} initialAge_wm={16} user={user}>
                 <div>
                   <i>&lt;Home&gt;组件的子组件1</i>
                   <b>&lt;Home&gt;组件的字组件2</b>

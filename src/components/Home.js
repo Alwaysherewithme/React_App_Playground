@@ -5,11 +5,17 @@ export default class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.age = this.props.age;
+    //this.age = this.props.age;
+    this.state = {
+      age: props.initialAge_wm
+    }
   }
 
-  addAges() {
-    this.age += 3;
+  onAddAges_wm() {
+    //this.age += 3;
+    this.setState({
+      age: this.state.age+3
+    })
     console.log(this);
   }
 
@@ -35,11 +41,12 @@ export default class Home extends Component {
               <p>{ false? "" : "Condition is false caused by '?:' !"}</p>
 
               <h3>二、通过Props传递数据</h3>
-              <h5>App组件属性传递给Home组件</h5>
-              <p>name: {this.props.name}; age: {this.props.age}</p>
-              { /*<button onClick={this.addAges.bind(this)} className="btn btn-primary">
+              <h5>★ App组件属性传递给Home组件的属性</h5>
+              <p>name: {this.props.name}; initialAge_wm: {this.props.initialAge_wm}</p>
+              <h5>★ Home组件内定义的属性age: {this.state.age}</h5>
+              { /*<button onClick={this.onAddAges_wm.bind(this)} className="btn btn-primary">
                     Make me 3 years older</button> // 正确写法，也可写成以下形式*/ }
-              <button onClick={() => {this.addAges()}} className="btn btn-primary">
+              <button onClick={() => {this.onAddAges_wm()}} className="btn btn-primary">
                     Make me 3 years older</button>
               
               <p>hobbies:</p>
