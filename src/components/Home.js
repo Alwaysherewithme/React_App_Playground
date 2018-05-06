@@ -9,7 +9,8 @@ export default class Home extends Component {
     //this.age = this.props.age;
     this.state = {
       age: props.initialAge_wm,
-      status: 0
+      status: 0,
+      headerLink: "子组件Home中改变了HeaderLink"
     }
     setTimeout(() => {
       this.setState({
@@ -28,6 +29,10 @@ export default class Home extends Component {
 
   handlePost_wm() {
     this.props.post(this.state.age)  // post(...)为父组件App传来的函数，age为子组件Home的state里的
+  }
+
+  onChangeLink_wm() {
+    this.props.changeLink(this.state.headerLink);
   }
 
   render() {
@@ -73,6 +78,8 @@ export default class Home extends Component {
               <p></p>
               <button onClick={this.handlePost_wm.bind(this)} className="btn btn-default">Home posts data to App</button>
               {/* 上行使用了bind(this)是因为handlePost_wm()里用到了this */}
+              <p></p>
+              <button onClick={this.onChangeLink_wm.bind(this)} className="btn btn-default">Home组件</button>
             </div>
           </div>
         </div>

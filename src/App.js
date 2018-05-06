@@ -8,12 +8,25 @@ import './App.css';
 
 class App extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      headerLink: "Header-Link"
+    }
+  }
+
   onGreet_wm() {
     alert("子组件Home向父组件App通信……")
   }
 
   onPost_wm(age) {
     alert("父组件App接收到子组件Home传来的age："+age)
+  }
+
+  onChangeHeaderLink_wm(newHeaderLink) {
+    this.setState({
+      headerLink: newHeaderLink
+    })
   }
 
   render() {
@@ -37,7 +50,7 @@ class App extends Component {
         <div className="container">
           <div className="row">
             <div className="col-xs-1 col-xs-offset-11">
-              <Header2 />
+              <Header2 homeLink="Home-Link" headerLink={this.state.headerLink} />
             </div>
           </div>
           <div className="row">
@@ -47,7 +60,8 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-xs-1 col-xs-offset-11">
-              <Home name={"Home组件-name"} initialAge_wm={16} user={user} greet={this.onGreet_wm} post={this.onPost_wm}>
+              <Home name={"Home组件-name"} initialAge_wm={16} user={user} 
+                greet={this.onGreet_wm} post={this.onPost_wm} changeLink={this.onChangeHeaderLink_wm.bind(this)}>
               {/* 上行不使用this.onGreet_wm.bind(this)是因为onGreet_wm()中没用到this */}
                 <div>
                   <i>&lt;Home&gt;组件的子组件1</i>
