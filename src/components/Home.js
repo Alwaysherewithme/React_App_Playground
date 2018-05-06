@@ -26,6 +26,10 @@ export default class Home extends Component {
     console.log(this);
   }
 
+  handlePost_wm() {
+    this.props.post(this.state.age)  // post(...)为父组件App传来的函数，age为子组件Home的state里的
+  }
+
   render() {
     let content = "";
     if(true){
@@ -64,6 +68,11 @@ export default class Home extends Component {
               <div>{this.props.children}</div>
               { /* <div>{this.props.children.map((item, i) => <div>{item}</div>)}</div> 
                   // 错误写法！this.props.children.map is not a function*/}
+              
+              <button onClick={this.props.greet} className="btn btn-default">Home calls App</button>
+              <p></p>
+              <button onClick={this.handlePost_wm.bind(this)} className="btn btn-default">Home posts data to App</button>
+              {/* 上行使用了bind(this)是因为handlePost_wm()里用到了this */}
             </div>
           </div>
         </div>
@@ -75,10 +84,10 @@ Home.propTypes = {
   name: PropTypes_wm.string,
   age: PropTypes_wm.number,
   user: PropTypes_wm.object,
+  greet: PropTypes_wm.func,
   /*
   PropTypes_wm.array,
   PropTypes_wm.bool,
-  PropTypes_wm.func,
   PropTypes_wm.symbol
   */
   children: PropTypes_wm.element.isRequired
