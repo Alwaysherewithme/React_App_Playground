@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>03 - Replace React createElement Function Call with JSX</title>
+</head>
+<body>
+	<h1>Replace React createElement Function Call with JSX</h1>
+	<hr />
+	<div id='root'></div>
+
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.production.min.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.production.min.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<script type="text/babel">
+		const rootElement = document.getElementById('root');
+
+		const content_1 = "Hello";
+		const content_2 = "world";
+		const myClassName = "container_1";
+
+		{/*
+		const element = <div className={ myClassName + "_hi-there"}>{( () => content_1 )()} { content_2 }!</div>
+		*/}
+
+		const props = {
+			className: 'container_2',
+			children: 'Welcome!'
+		};
+		
+		{/*
+		const element = <div className="classNameInPropsIsNotReplaced" {...props} />
+		*/}
+
+		{/*
+		const element = <div {...props} />
+		*/}
+
+		const element = <div {...props} className="classNameInPropsIsReplaced">childrenInPropsIsReplaced</div>
+
+		console.log(element);
+		ReactDOM.render(element, rootElement);
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>14 - Make Basic Forms with Reacts</title>
+</head>
+
+<body>
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<h1>Make Basic Forms with React</h1>
+	<hr />
+	<p>In this lesson we'll take a look at how to make a basic form with React. We'll see how to use the onSubmit event to 
+		prevent the default submit behavior of forms with React and then how to use that event to get the values from the form. 
+		We'll also see how you can use the React ref prop to get the value of form elements as well.</p>
+	<div id='root'></div>
+
+	<style>
+		
+	</style>
+	
+	<script type="text/babel">
+		class NameForm extends React.Component {
+			
+			handleSubmit = event => {
+				event.preventDefault()
+
+				console.log({ target: event.target })
+				console.log(event.target[0].value)
+				console.log(event.target.elements.username.value)
+				console.log(this.inputNode.value)
+
+				const value = event.target.elements.username.value
+				const error = this.props.getErrorMessage(value)
+				if(error) {
+					alert(`error: ${error}`)
+				}else {
+					alert(`success: ${value}`)
+				}
+			}
+
+			render() {
+				return (
+					<form onSubmit={this.handleSubmit}>
+						<label>
+							Name: <input type="text" name="username" ref={ node => (this.inputNode = node)} />
+						</label>
+						<button type="submit">Submit</button>
+					</form>
+				)
+			}
+		}
+
+		ReactDOM.render(
+			<NameForm 
+				getErrorMessage={
+					value => {
+						if(value.length < 3) {
+							return `Value must be at least 3 character!`
+						}
+						if(!value.includes('s')) {
+							return `Value does not include "s"!`
+						}
+						return null
+					}
+				}
+			/>,
+			document.getElementById('root')
+		)
+		
+	</script>
+</body>
+
+</html>

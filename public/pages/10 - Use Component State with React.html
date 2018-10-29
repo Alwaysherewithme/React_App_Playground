@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>10 - Use Component State with React</title>
+</head>
+<body>
+	<h1>Use Component State with React</h1>
+	<hr />
+	<p>We do have access to the original event if we say event.nativeEvent. Then we save that, we'll say, "Hi." We get the actual native event here. Most of the time, you don't actually need the native event.<br />One nice thing about this is that React is optimizing things for us, so it's using event delegation. There's really only one event handler for each type on the entire document. Then it manages calling your event handlers.<br /> One thing that I really like about the way that React does events is that it's directly on the element that you're rendering, and you're passing is a direct reference to the function that you want to have called. It's pretty easy to follow the code path of the events that you have wired up.</p>
+	<div id='root'></div>
+
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<script type="text/babel">
+		class StopWatch extends React.Component {
+			state = {
+				lapse: 0,
+				running: false
+			}
+
+			handleRunClick = () => {
+				/*
+				this.setState({
+					lapse: 10,
+					running: true
+				})
+				*/
+				this.setState(state => {
+					if(state.running) {
+						clearInterval(this.timer)
+					} else {
+						const startTime = Date.now() - this.state.lapse
+						this.timer = setInterval(() => {
+							this.setState({
+								lapse: Date.now() - startTime
+							}, () => {
+								console.log(this.state.lapse)
+							})
+						})
+					}
+					return {running: !state.running}
+				})
+				/*
+				const startTime = Date.now() - this.state.lapse
+				setInterval(() => {
+					this.setState({lapse: Date.now() - startTime})
+				})
+				this.setState({running: true})
+				*/
+			}
+
+			handleClearClick = () => {
+				clearInterval(this.timer)
+				this.setState({
+					lapse: 0,
+					running: false
+				})
+			}
+
+			/* Stop memory leaks with componentWillUnmount lifecycle method in React */
+			// componentWillUnmount() {
+			// 	clearInterval(this.timer)
+			// }
+
+			render() {
+				// const {lapse, running} = this.props
+				const {lapse, running} = this.state
+				const buttonStyles = {
+					border: '1px solid #ccc',
+					background: '#fff',
+					fontSize: '2em',
+					padding: 15,
+					margin: 5,
+					width: 200
+				}
+				return (
+					<div style={{textAlign: 'center'}}>
+						<label style={{fontSize: '5em', display: 'block'}}>
+							{lapse} ms
+						</label>
+						<button onClick={this.handleRunClick} style={buttonStyles}>{running ? 'Stop' : 'Start'}</button>
+						<button onClick={this.handleClearClick} style={buttonStyles}>Clear</button>
+					</div>
+				)
+			}
+		}
+
+		/*
+		function StopWatch({running, lapse}) {
+			const buttonStyles = {
+				border: '1px solid #ccc',
+				background: '#fff',
+				fontSize: '2em',
+				padding: 15,
+				margin: 5,
+				width: 200
+			}
+			return (
+				<div style={{textAlign: 'center'}}>
+					<label style={{fontSize: '5em', display: 'block'}}>
+						{lapse} ms
+					</label>
+					<button style={buttonStyles}>{running ? 'Stop' : 'Start'}</button>
+					<button style={buttonStyles}>Clear</button>
+				</div>
+			)
+		}
+		*/
+
+		const element = (
+			// <StopWatch running={true} lapse={10} />
+			<StopWatch />
+		)
+
+		ReactDOM.render(
+			element,
+			document.getElementById('root')
+		)
+
+	</script>
+</body>
+</html>

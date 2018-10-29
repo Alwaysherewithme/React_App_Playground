@@ -1,3 +1,52 @@
+## Source
+- [Start Learning React](https://egghead.io/courses/start-learning-react)
+  - Use create-react-app to Setup a Simple React App
+  - Write a "Hello World" React Component
+  - Display Output in React with a Component's render Method
+  - Set Properties on React Components
+  - Manage React Component State with setState
+  - Use React Components as Children for Other Components
+  - Access Nested Data with Reacts props.children
+  - Add Custom propType Validation to React Components
+  - Normalize Events with Reacts Synthetic Event System
+  - Use React ref to Get a Reference to Specific Components
+  - Understand the React Component Lifecycle Methods
+  - Manage React Component State with Lifecycle Methods
+  - Control React Component Updates When New Props Are Received
+  - Use map to Create React Components from Arrays of Data
+  - Compose React Component Behavior with Higher Order Components
+  - Build a JSX Live Compiler as a React Component
+  - Understand JSX at a Deeper Level
+  - Understand React.Children Utilities
+  - Use React.cloneElement to Extend Functionality of Children Components
+  - Write More Reusable React Components with Composable APIs
+  - Debug React Components with Developer Tools in Chrome
+
+- [The Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-react)
+  - Introduction to The Beginner's Guide to ReactJS
+  - Create HTML elements with React's createElement API
+  - Replace React createElement Function Call with JSX
+  - Create a Simple Reusable React Component
+  - Validate Custom React Component Props with PropTypes
+  - Conditionally Render A React Component
+  - Rerender a React Application
+  - Style React Components with className and In Line Styles
+  - Use Event Handlers with React
+  - Use Component State with React
+  - Stop Memory Leaks with componentWillUnmount Lifecycle Method in React
+  - Use Class Components with React
+  - Manipulate the DOM with React refs
+  - Make Basic Forms with React
+  - Make Dynamic Forms with React
+  - Controlling Form Values with React
+  - Use the key prop when Rendering a List with React
+  - Make HTTP Requests with React
+  - Build and deploy a React Application
+
+- [The Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-react)
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

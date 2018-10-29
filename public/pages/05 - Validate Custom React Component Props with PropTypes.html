@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>05 - Validate Custom React Component Props with PropTypes</title>
+</head>
+<body>
+	<h1>Validate Custom React Component Props with PropTypes</h1>
+	<hr />
+	<div id='root'></div>
+
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<!-- <script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.production.min.js"></script> -->
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<script type="text/babel">
+
+		// class component(can hold state)
+		class SayHelloAsClass extends React.Component {
+			
+			static propTypes = {
+				firstName: PropTypes.string.isRequired,
+				lastName: PropTypes.string
+			}
+
+			render() {
+				const {firstName, lastName} = this.props;
+				return (
+					<div>
+						Hello {firstName} {lastName}!
+					</div>
+				)
+				/*
+				// without "()", "return" and "<div>" should be on the same line!
+				return <div>
+					Hello {firstName} {lastName}!
+				</div>
+				*/
+			}
+		}
+		
+		{/*
+		// stateless component(can't hold state)
+		function SayHelloAsFunction(props) {
+			return (
+				<div>
+					Hello {props.firstName} {props.lastName || 'Default value'}!
+				</div>
+			)
+		}
+		*/}
+
+		{/*
+		SayHelloAsFunction.propTypes = {
+			firstName(props, propName, componentName) {
+				if(typeof props[propName] !== 'string') {
+					return new Error(`You should pass a string for ${propName} in ${componentName} but you passed a ${typeof props[propName]}.`)
+				}
+			}
+		}
+		*/}
+
+		{/*
+		const PropTypes = {
+			string(props, propName, componentName) {
+				if(typeof props[propName] !== 'string') {
+					return new Error(`You should pass a string for ${propName} in ${componentName} but you passed a ${typeof props[propName]}.`)
+				}
+			}
+		}
+		*/}
+
+		{/*
+		SayHelloAsFunction.propTypes = {
+			firstName: PropTypes.string.isRequired,
+			lastName: PropTypes.string
+		}
+		*/}
+
+		{/*
+		SayHelloAsClass.propTypes = {
+			firstName: PropTypes.string.isRequired,
+			lastName: PropTypes.string
+		}
+		*/}
+
+		ReactDOM.render(
+			<SayHelloAsClass firstName={true} />,
+			document.getElementById('root')
+		)
+	</script>
+</body>
+</html>

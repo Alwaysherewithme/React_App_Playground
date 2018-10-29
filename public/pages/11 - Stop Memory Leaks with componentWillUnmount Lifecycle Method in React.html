@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>11 - Stop Memory Leaks with componentWillUnmount Lifecycle Method in React</title>
+</head>
+<body>
+	<h1>Stop Memory Leaks with componentWillUnmount Lifecycle Method in React</h1>
+	<hr />
+	<p>In this lesson, we have a stopwatch component that will update the time since it was run in milliseconds. The problem is, 
+		if you unmount the component, there is a memory leak because the interval that is set when you start and the timer is not stopped.
+		React provides the componentWillUnmount lifecycle method as an opportunity to clear anything that needs to be cleared when 
+		the component is unmounted or removed from the DOM.</p>
+	<div id='root'></div>
+
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<style type="text/css">
+		
+		div div div{
+			border: 1px black solid;
+		}
+
+		.box {
+			width: 120px;
+			height: 120px;
+		}
+
+		.box--small {
+			width: 60px;
+			height: 60px;
+		}
+
+
+	</style>
+
+	<script type="text/babel">
+		class StopWatch extends React.Component {
+			state = {
+				lapse: 0,
+				running: false
+			}
+
+			handleRunClick = () => {
+				/*
+				this.setState({
+					lapse: 10,
+					running: true
+				})
+				*/
+				this.setState(state => {
+					if(state.running) {
+						clearInterval(this.timer)
+					} else {
+						const startTime = Date.now() - this.state.lapse
+						this.timer = setInterval(() => {
+							this.setState({
+								lapse: Date.now() - startTime
+							}, () => {
+								console.log(this.state.lapse)
+							})
+						})
+					}
+					return {running: !state.running}
+				})
+				/*
+				const startTime = Date.now() - this.state.lapse
+				setInterval(() => {
+					this.setState({lapse: Date.now() - startTime})
+				})
+				this.setState({running: true})
+				*/
+			}
+
+			handleClearClick = () => {
+				clearInterval(this.timer)
+				this.setState({
+					lapse: 0,
+					running: false
+				})
+			}
+
+			/* Stop memory leaks with componentWillUnmount lifecycle method in React */
+			componentWillUnmount() {
+				clearInterval(this.timer)
+			}
+
+			render() {
+				// const {lapse, running} = this.props
+				const {lapse, running} = this.state
+				const buttonStyles = {
+					border: '1px solid #ccc',
+					background: '#fff',
+					fontSize: '2em',
+					padding: 15,
+					margin: 5,
+					width: 200
+				}
+				return (
+					<div style={{textAlign: 'center'}}>
+						<label style={{fontSize: '5em', display: 'block'}}>
+							{lapse} ms
+						</label>
+						<button onClick={this.handleRunClick} style={buttonStyles}>{running ? 'Stop' : 'Start'}</button>
+						<button onClick={this.handleClearClick} style={buttonStyles}>Clear</button>
+					</div>
+				)
+			}
+		}
+
+		/*
+		function StopWatch({running, lapse}) {
+			const buttonStyles = {
+				border: '1px solid #ccc',
+				background: '#fff',
+				fontSize: '2em',
+				padding: 15,
+				margin: 5,
+				width: 200
+			}
+			return (
+				<div style={{textAlign: 'center'}}>
+					<label style={{fontSize: '5em', display: 'block'}}>
+						{lapse} ms
+					</label>
+					<button style={buttonStyles}>{running ? 'Stop' : 'Start'}</button>
+					<button style={buttonStyles}>Clear</button>
+				</div>
+			)
+		}
+		*/
+
+		const element = (
+			// <StopWatch running={true} lapse={10} />
+			<StopWatch />
+		)
+
+		ReactDOM.render(
+			element,
+			document.getElementById('root')
+		)
+
+	</script>
+</body>
+</html>

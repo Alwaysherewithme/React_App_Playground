@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>06 - Conditionally Render A React Component</title>
+</head>
+<body>
+	<h1>Conditionally Render A React Component</h1>
+	<hr />
+	<div id='root'></div>
+
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<script type="text/babel">
+
+		{/*
+		function Message({message}) {
+			if(!message) {
+				//return <div>No message</div>
+				return React.createElement('div', null, 'No message')
+			}
+			//return <div>{message}</div>
+			return React.createElement('div', null, message)
+		}
+		*/}
+
+		function Message({message}) {
+			return (
+				<div>
+					{
+						/*
+							message ? React.createElement('div', null, message) : React.createElement(
+			'div', null, 'No message')
+						*/
+						message ? <div>{message}</div> : <div>No message</div>
+					}
+				</div>
+			)
+		}
+
+		ReactDOM.render(
+			<Message message='message' />,
+			/* <Message message={'message'} />, */
+			/* <Message message={null} />, */
+			/* <Message message='' />, */
+			document.getElementById('root')
+		)
+
+	</script>
+</body>
+</html>

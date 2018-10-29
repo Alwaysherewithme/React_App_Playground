@@ -80,6 +80,7 @@ export default class Home extends Component {
               {/* 上行使用了bind(this)是因为handlePost_wm()里用到了this */}
               <p></p>
               <button onClick={this.onChangeLink_wm.bind(this)} className="btn btn-default">Home组件</button>
+              <input type="" value={this.props.initialName} />
             </div>
           </div>
         </div>
@@ -92,6 +93,7 @@ Home.propTypes = {
   age: PropTypes_wm.number,
   user: PropTypes_wm.object,
   greet: PropTypes_wm.func,
+  initialName: PropTypes_wm.string,
   /*
   PropTypes_wm.array,
   PropTypes_wm.bool,

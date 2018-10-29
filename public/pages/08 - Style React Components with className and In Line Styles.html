@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>08 - Style React Components with className and In Line Styles</title>
+</head>
+<body>
+	<h1>Style React Components with className and In Line Styles</h1>
+	<hr />
+	<p> In review, to style a React component, you can use the classname prop to assign classnames used in regular CSS styles, 
+		and you can use the style prop which accepts an object of CSS. One more important thing to note about the style prop is that 
+		the values are not vendor prefixed for you, so you'll have to do that yourself.<br />
+		There are a couple other problems within in-line styles as well. There are a couple libraries to overcome some of these problems. 
+		Popular libraries include styled components, emotion, and glamorous. I highly recommend you give these a look if you're planning 
+		on building a serious React application.</p>
+	<div id='root'></div>
+
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<style type="text/css">
+		
+		div div div{
+			border: 1px black solid;
+		}
+
+		.box {
+			width: 120px;
+			height: 120px;
+		}
+
+		.box--small {
+			width: 60px;
+			height: 60px;
+		}
+
+
+	</style>
+
+	<script type="text/babel">
+
+		const className = 'box box--small';
+
+		const props = {
+			//className: 'box box--small',
+			className,
+			style: {paddingLeft: 20}
+		}
+
+		/*
+		function Box(props) {
+			return (
+				<div className="box box--small" style={{paddingLeft: 40}} />
+				<div {...props} />
+			)
+		}
+		*/
+
+		function Box({style, size, className='', ...rest}) {
+			const sizeClassName = size ? `box--${size}`:''
+			return (
+				<div className={`box ${className} ${sizeClassName}`.trim()} style={{paddingLeft: 20, ...style}} {...rest} />
+			)
+		}
+
+		const element = (
+			<div>
+				{/*<div className="box box--small" style={{paddingLeft: 30}}>box</div>*/}
+
+				{/*<div {...props}>box</div>*/}
+
+				<Box className='box--small' style={{backgroundColor: 'lightblue'}}>small box</Box>
+
+				<Box size="small" style={{backgroundColor: 'lightblue'}}>small box(no className attribute)</Box>
+				<Box size="middle" style={{backgroundColor: 'pink'}}>middle box(no className attribute)</Box>
+				<Box size="large" style={{backgroundColor: 'orange'}}>large box(no className attribute)</Box>
+
+				{/*<div style={{paddingLeft: '20px'}}>box</div>*/}
+
+			</div>
+		)
+
+		ReactDOM.render(
+			element,
+			document.getElementById('root')
+		)
+	</script>
+</body>
+</html>

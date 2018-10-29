@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
+import { Navbar, NavbarBrand } from 'reactstrap';
 
 import Header2 from './components/Header';
 import Home from './components/Home';
+
+import Menu from './components/MenuComponent';
 
 import logo from './logo.svg';
 import './App.css';
@@ -36,7 +39,7 @@ class App extends Component {
     }
 
     return (
-      <div>
+      <Fragment>
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" title="React!" />
@@ -44,6 +47,64 @@ class App extends Component {
           </header>
           <p className="App-intro">
             To get started, please edit <code>src/App.js</code> and save to reload.
+          </p>
+        </div>
+
+        <div>
+          <p>Front-End JavaScript Frameworks and Libraries: An Introduction</p>
+        </div>
+
+        <div className="">
+        <h2>Configure React Application</h2>
+        <p>Following steps show how to configure React application to make use of both 
+        Bootstrap CSS classes and also Reactstrap, which is the React, the components based 
+        re-implementation of Bootstrap's JavaScript components. And so we are making use of that 
+        within our application to construct the various views that we will render in browser.</p>
+          <div>
+            <h3>Configure your React Project to use Reactstrap</h3>
+            <code>yarn add bootstrap@4.0.0
+            yarn add reactstrap@5.0.0
+            yarn add react-popper@0.9.2</code>
+          </div>
+          <div>
+            <h3>Configure to use Bootstrap 4</h3>
+            <code>import 'bootstrap/dist/css/bootstrap.min.css';</code>
+          </div>
+          <Navbar dark color="primary">
+            <div className="container">
+              <NavbarBrand href="/">Adding a Bootstrap Navigation Bar</NavbarBrand>
+            </div>
+          </Navbar>
+        </div>
+
+        <Menu />
+
+        <div>
+          <h2>State</h2>
+          <p>(1) Each component can store its own local information in its "state":<br />
+--Private and fully controlled by the component<br />
+--Can be passed as props to children<br /><br />
+(2) Only class components can have local state<br />
+(3) Other kind of React components, we don't need to store state and we can simplify the 
+component declaration significantly.<br />
+(4) Never directly manipulate the state property values, use setState instead.</p>
+          <h2>Props</h2>
+          <p>(1) JSX attributes are passed into a component as a single object:<br />
+--Available in the component as "props"<br />
+--Can pass in multiple attributes<br />
+--Cannot modify props within the component<br />
+(2) Examples:<br />
+&lt;Menu dishes={this.state.dishes} /&gt;<br />
+- Here the dishes are available as props within the Menu Component and can be accessed as this.props.dishes
+<p></p>
+&lt;Dishdetail dish={this.state.dish} comments={this.state.comments} /&gt;<br />
+- Here dish is available as props within the Dishdetail Component and can be accessed as this.props.dish, and comments as this.props.comments
+</p>
+          <h2>Handing Events</h2>
+          <p>Handling events is similar to the way you handle events on DOM elements:<br />
+- Use camelCase to specify events<br />
+- Pass function as the event handler<br />
+{/* Example: &lt;Card onClick={()=>this.onDishSelect(dish)}&gt; */}
           </p>
         </div>
 
@@ -71,7 +132,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

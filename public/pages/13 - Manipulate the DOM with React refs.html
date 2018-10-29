@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>13 - Manipulate the DOM with React refs</title>
+</head>
+
+<body>
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+	<scirpt src="https://unpkg.com/vanilla-tilt@1.4.1/dist/vanilla-tilt.min.js"></scirpt>
+
+	<h1>Manipulate the DOM with React refs</h1>
+	<hr />
+	<p>Often you'll find there's a jQuery plugin or JavaScript library which needs access to DOM nodes to work in your application.
+		Other times you need access to the DOM node directly to get the value of form fields or for other reasons. In this lesson
+		we'll learn how to do this using React's ref prop.</p>
+	<div id='root'></div>
+
+	<style>
+		/* Taken from the vanilla-tilt.js demo site: https://micku7zu.github.io/vanilla-tilt.js/index.html */
+
+		.tilt-root {
+			height: 150px;
+			background-color: red;
+			width: 200px;
+			background-image: -webkit-linear-gradient(315deg, #ff00ba 0%, #fae713 100%);
+			background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
+			transform-style: preserve-3d;
+			will-change: transform;
+			transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+		}
+
+		.tilt-child {
+			position: absolute;
+			width: 50%;
+			height: 50%;
+			top: 50%;
+			left: 50%;
+			transform: translateZ(30px) translateX(-50%) translateY(-50%);
+			box-shadow: 0 0 50px 0 rgba(51,
+			51, 51, 0.3);
+			background-color: white;
+		}
+
+		.totally-centered {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		* {
+			box-sizing: border-box
+		}
+	</style>
+	
+	<script type="text/babel">
+		class Tilt extends React.Component {
+			componentDidMount() {
+				VanillaTilt.init(this.rootNode, {
+					max: 25,
+					speed: 400,
+					glare:true,
+					'max-glare': 0.5
+				})
+				console.log(this.rootNode);
+			}
+
+			render() {
+				return (
+					<div ref={ node => (this.rootNode = node) } className="tilt-root">
+						<div className="tilt-child">
+							<div { ...this.props } />
+						</div>
+					</div>
+				)
+			}
+		}
+		
+		const element = (
+			<div className="totally-centered">
+				<Tilt>
+					<div className="totally-centered">
+						vanilla-tilt.js
+					</div>
+				</Tilt>
+			</div>
+		)
+
+		ReactDOM.render(
+			element,
+			document.getElementById('root')
+		)
+		
+	</script>
+</body>
+
+</html>

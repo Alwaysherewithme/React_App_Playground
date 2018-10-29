@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>16 - Controlling Form Values with React</title>
+</head>
+
+<body>
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<h1>Controlling Form Values with React</h1>
+	<hr />
+	<p>Static forms don't give the user a lot of information about how to submit the form. We can use Reacts onChange prop on 
+		an input to dynamically update the form; disabling and enabling the submit button on a condition. This allows for 
+		custom validation as the user makes changes to the input.</p>
+	<div id='root'></div>
+
+	<style>
+		
+	</style>
+	
+	<script type="text/babel">
+		class MyFancyForm extends React.Component {
+			static availableOptions = [
+				'apple',
+				'grape',
+				'cherry',
+				'orange',
+				'pear',
+				'peach'
+			]
+
+			state = {
+				commaSeparated: '',
+				multiline: '',
+				multiSelected: []
+			}
+
+			handleCommaSeparatedChange = event => {
+				console.log('handleCommaSeparatedChanged')
+				const { value } = event.target
+				this.setState({
+					commaSeparated: value,
+					multiline: value.split(',').map(val => val.trim()).filter(Boolean).join('\n'),
+					multiSelected: value.split(',').map(val => val.trim()).filter(Boolean).filter(val => MyFancyForm.availableOptions.includes(val))
+				})
+			}
+
+			handleMultilineChange = event => {
+				console.log('handleMultilineChanged')
+				const { value } = event.target
+				this.setState({
+					commaSeparated: value.split('\n').map(val => val.trim()).filter(Boolean).join(','),
+					multiline: value,
+					multiSelected: value.split('\n').map(val => val.trim()).filter(Boolean).filter(val => MyFancyForm.availableOptions.includes(val))
+				})
+			}
+
+			handleMultiSelectChange = event => {
+				console.log('handleMultiSelectChanged')
+				console.log({target: event.target})
+				console.log(event.target.selectedOptions)
+
+				// .map is not a function on an HTML node list. So we use Array.from to turn it into an arry
+				const allValues = Array.from(event.target.selectedOptions).map(o => o.value)
+				this.setState({
+					commaSeparated: allValues.join(','),
+					multiline: allValues.join('\n'),
+					multiSelected: allValues
+				})
+			}
+
+			render() {
+				const { commaSeparated, multiline, multiSelected } = this.state
+				return (
+					<form>
+						<div>
+							<label>
+								comma separated values:
+								<br />
+								<input type="text" value={ commaSeparated }
+									onChange={ this.handleCommaSeparatedChange } />
+							</label>
+						</div>
+						<div>
+							<label>
+								multiline values:
+								<br />
+								<textarea rows={ MyFancyForm.availableOptions.length }
+									value={ multiline }
+									onChange={ this.handleMultilineChange } />
+							</label>
+						</div>
+						<div>
+							<label>
+								multiSelect values:
+								<br />
+								<select multiple
+									size={ MyFancyForm.availableOptions.length }
+									// value={[]}
+									// value={""}
+									value={ multiSelected }
+									onChange={ this.handleMultiSelectChange } >
+									{ MyFancyForm.availableOptions.map(element => (
+										<option key={ element } value={ element } /*selected={ multiSelected.includes(element) } onSelect={ this.handleMultiSelectChange }*/>
+											{ element }
+										</option>
+									))
+									 /*MyFancyForm.availableOptions.map(element => { return (
+										<option>{ element }</option>
+									 )})*/
+									}
+								</select>
+							</label>
+						</div>
+					</form>
+				)
+			}
+		}
+
+		ReactDOM.render(
+			<MyFancyForm />,
+			document.getElementById('root')
+		)
+		
+	</script>
+</body>
+
+</html>

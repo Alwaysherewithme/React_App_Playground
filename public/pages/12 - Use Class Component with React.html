@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>11 - Use Class Component with React</title>
+</head>
+<body>
+	<h1>Use Class Component with React</h1>
+	<hr />
+	<p>In this lesson we'll look at a few ways to deal with issues around this when writing class components with React. We'll eventually land at Public Class Fields syntax which is a stage 3 proposal in the ECMAScript standardization process.</p>
+	<div id='root'></div>
+
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<script type="text/babel">
+		class Counter extends React.Component {
+			constructor(...args) {
+				super(...args)
+				// this.state = {
+				// 	count: 0
+				// }
+				/** Solution 2 */
+				// this.handleClick = this.handleClick.bind(this)
+			}
+
+			/** Solution 3: public class filed and constructor could be removed */
+			// state = { count: 0 }
+			// handleClick = this.handleClick.bind(this)
+
+			/** Solution 4: not creating this handle click method on the prototype at all and just having it on the instance */
+			// state = { count: 0 }
+			// handleClick = function () {
+			// 	this.setState(({count}) => ({
+			// 		count: count + 1
+			// 	}))
+			// }.bind(this)
+
+			/** Solution 5: use the lexical this that arrow functions give us: 
+			Arrow functions have their own lexical this. When we use arrow functions, 
+			we don’t have to manually bind them to the class. */
+			state = { count: 0 }
+			handleClick = () => {
+				this.setState(({count}) => ({
+					count: count + 1
+				}))
+			}
+
+			handleClick() {
+				this.setState(({count}) => ({
+					count: count + 1
+				}))
+			}
+
+			render() {
+				return (
+					<button 
+						// onClick={ () => 
+						// 	this.setState( ({ count }) => ({
+						// 		count: count +1 
+						// 	})) }
+
+						/** Solution 1 */
+						// onClick={ this.handleClick.bind(this) }
+
+						onClick={ this.handleClick }
+					>
+						{ this.state.count }
+					</button>
+				)
+			}
+		}
+
+		ReactDOM.render(
+			<Counter />,
+			document.getElementById('root')
+		)
+
+		/*
+		var bob = {
+			name: 'Bob',
+			greet(name) {
+				return `Hi ${name}, my name is ${this.name}!`
+			}
+		}
+
+		bob.greet('Jane')   // "Hi Jane, my name is Bob!"
+
+		var greetFn = bob.greet
+		greetFn('Jane')   // "Hi Jane, my name is !"
+
+		var greetFn = bob.greet.bind(bob)
+		greetFn('Jane')   // "Hi Jane, my name is Bob!"
+		
+		*/
+
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>18 - Make HTTP Requests with React</title>
+</head>
+
+<body>
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+	<script src="https://unpkg.com/axios@0.16.2/dist/axios.min.js"></script>
+
+	<h1>Make HTTP Requests with React</h1>
+	<hr />
+	<p>Often to get user data you'll make an AJAX request using axios or the fetch API. In this lesson we'll get a 
+		GitHub user's company using GitHub's GraphQL API using React's componentDidMount lifecycle method.</p>
+	<div id='root'></div>
+
+	<style>
+		
+	</style>
+	
+	<script type="text/babel">
+		class UserCompany extends React.Component {
+			state = {
+				company: undefined,
+				loaded: false
+			}
+
+			componentDidMount() {
+				axios({
+					url: 'https://api.github.com/graphql',
+					method: 'post',
+					data: {
+						query: `{
+							user(login: "${this.props.username}") {
+								company
+							}
+						}`
+					},
+					headers: {
+						Authorization: `bearer 4b188d9cb0686861d9c68f08b5117adbbc08f671`
+					}
+				}).then(response => {
+					this.setState({
+						loaded: true,
+						company: response.data.data.user.company
+					})
+				}, error => {
+					this.setState({
+						error,
+						loaded: true
+					})
+				})
+			}
+
+			render() {
+				return (this.state.error? this.state.error : (this.state.loaded ? (this.state.company || "Unknown") : "..."))
+			}
+		}
+
+		// const username = 'kentcdodds'
+		const username = 'Alwaysherewithme'
+		const element = (
+			<div>
+				<div>
+					{ `@${username} works at ` }
+					<UserCompany username={username} />
+				</div>
+			</div>
+		)
+
+		ReactDOM.render(
+			element,
+			document.getElementById('root')
+		)
+		
+	</script>
+</body>
+
+</html>

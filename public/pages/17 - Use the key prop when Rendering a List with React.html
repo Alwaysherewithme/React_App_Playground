@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>17 - Use the key prop when Rendering a List with React</title>
+</head>
+
+<body>
+
+	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+	<h1>Controlling Form Values with React</h1>
+	<hr />
+	<p>JSX is merely JavaScript and to render a list you can use the array method .map to map an array to React elements. 
+		However, if you don't use the key prop correctly, it can lead to unexpected results, so we explore what can happen and
+		how to use the key prop correctly.</p>
+	<div id='root'></div>
+
+	<style>
+		
+	</style>
+	
+	<script type="text/babel">
+		class App extends React.Component {
+			static allItems = [
+				{id: 'a', value: "apple"},
+				{id: 'o', value: 'orange'},
+				{id: 'g', value: 'grape'},
+				{id: 'p', value: 'pear'}
+			]
+
+			state = {
+				items: []
+			}
+			
+			addItem = () => {
+				this.setState(({items}) => ({
+					items: [
+						...items,
+						App.allItems.find(
+							i => !items.includes(i)
+						)
+					]
+				}))
+			}
+
+			removeItem = item => {
+				this.setState(({items}) => ({
+					items: items.filter(
+						i => i !== item
+					)
+				}))
+			}
+
+			render() {
+				const { items } = this.state
+				return (
+					// <div>
+					// 	{ App.allItems.map(item => (
+					// 		<div key={item.id}>{item.value}</div>
+					// 	))}
+					// </div>
+					<div>
+						<button
+							disabled={ items.length >= App.allItems.length }
+							onClick={ this.addItem }
+						>
+							+
+						</button>
+						{ items.map((i, index) => (
+							// <div key={index}>
+							<div key={ i.id }>
+								<button
+									onClick={() => this.removeItem(i)}
+								>
+									-
+								</button>
+								{ i.value }:
+								<input type="text" />
+							</div>
+						))}
+					</div>
+				)
+				
+			}
+		}
+
+		ReactDOM.render(
+			<App />,
+			document.getElementById('root')
+		)
+		
+	</script>
+</body>
+
+</html>
