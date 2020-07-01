@@ -6,11 +6,9 @@
 	<title>02 - Create HTML elements with React's createElement API</title>
 </head>
 <body>
-
 	<h1>Create HTML elements with React's createElement API</h1>
 	<hr />
 	<div id='root'></div>
-
 
 	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.production.min.js"></script>
 	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.production.min.js"></script>
@@ -18,25 +16,28 @@
 	<script type="text/javascript">
 		const rootElement = document.getElementById('root');
 		
-		/*
-		const element = document.createElement('div');
+		/* const element = document.createElement('div');
 		element.textContent = 'Hello world!';
 		element.className = 'container';
-		rootElement.appendChild(element);
-		*/
+		rootElement.appendChild(element); */
 
-		const element = React.createElement(
-				'div',
-				{className: 'container', children: ['Hello world!', 'Welcome!']},
-				/*
-				{className: 'container'},
-				'Hello world!',
-				'Welcome!'
-				*/
-			)
-		console.log(element);
-		ReactDOM.render(element, rootElement);
+		const user = {name: "Mike"}
+		
+		const element1 = React.createElement(
+			'div',
+			{className: 'container', children: ['Hello world!', user.name]}
+		)
 
+		const element2 = React.createElement(
+			'div',
+			{className: 'container'},
+			'Hello world!',
+			user.name,
+			false
+		)
+		console.log(element1);    // {props: {children: ["Hello world!", "Mike"], className: "container"}, type: "div", ...}
+		console.log(element2);   // {props: {children: ["Hello world!", "Mike", false], className: "container"}, type: "div", ...}
+		ReactDOM.render(element1, rootElement);
 	</script>
 </body>
 </html>

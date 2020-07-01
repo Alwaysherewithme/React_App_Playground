@@ -10,7 +10,6 @@
 	<hr />
 	<div id='root'></div>
 
-
 	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.production.min.js"></script>
 	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.production.min.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
@@ -21,29 +20,31 @@
 		const content_1 = "Hello";
 		const content_2 = "world";
 		const myClassName = "container_1";
+		const myObj = {value:100}
 
 		{/*
-		const element = <div className={ myClassName + "_hi-there"}>{( () => content_1 )()} { content_2 }!</div>
+		const element = <div className="container">{content_1 + ' ' + content_2 + myObj.value}!</div>
 		*/}
 
+		const element1 = <div className={ myClassName + "_hi-there"}>{( () => content_1 )()} { content_2 }!</div>
+
 		const props = {
+			id: 100,
 			className: 'container_2',
 			children: 'Welcome!'
 		};
 		
-		{/*
-		const element = <div className="classNameInPropsIsNotReplaced" {...props} />
-		*/}
+		const element2 = <div className="classNameInPropsIsNotReplacedByThisClassName" {...props} />
 
-		{/*
-		const element = <div {...props} />
-		*/}
+		const element3 = <div {...props} />
 
-		const element = <div {...props} className="classNameInPropsIsReplaced">childrenInPropsIsReplaced</div>
-
-		console.log(element);
-		ReactDOM.render(element, rootElement);
-
+		const element4 = <div {...props} className="classNameInPropsIsReplacedByThisClassName">childrenInPropsIsReplacedByChildrenHere</div>
+		// console.log(element)   // {props:{children:["Hello world100","!"],className: "container"},type:"div",...}
+		console.log(element1);   // {props:{children:["Hello", " ", "world", "!"], className:"container_1_hi-there"},type:"div",...}
+		console.log(element2);   // {props:{children: "Welcome!",className: "container_2",id: 100},type:"div",...}
+		console.log(element3);   // {props:{children: "Welcome!",className: "container_2",id: 100},type:"div",...}
+		console.log(element4);   // {props:{children: "childrenInPropsIsReplacedByChildrenHere",className: "classNameInPropsIsReplacedByThisClassName",id: 100},type:"div",...}
+		ReactDOM.render(element4, rootElement);
 	</script>
 </body>
 </html>

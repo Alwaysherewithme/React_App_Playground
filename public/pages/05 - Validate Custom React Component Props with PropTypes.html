@@ -10,49 +10,24 @@
 	<hr />
 	<div id='root'></div>
 
-
 	<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
 	<!-- <script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.production.min.js"></script> -->
 	<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
-	<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+	<!-- <script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script> -->
 	<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
 
 	<script type="text/babel">
 
-		// class component(can hold state)
-		class SayHelloAsClass extends React.Component {
-			
-			static propTypes = {
-				firstName: PropTypes.string.isRequired,
-				lastName: PropTypes.string
-			}
-
-			render() {
-				const {firstName, lastName} = this.props;
-				return (
-					<div>
-						Hello {firstName} {lastName}!
-					</div>
-				)
-				/*
-				// without "()", "return" and "<div>" should be on the same line!
-				return <div>
-					Hello {firstName} {lastName}!
-				</div>
-				*/
-			}
-		}
 		
-		{/*
+		
 		// stateless component(can't hold state)
 		function SayHelloAsFunction(props) {
 			return (
 				<div>
-					Hello {props.firstName} {props.lastName || 'Default value'}!
+					Hello {props.firstName} {props.lastName || 'Default-value'}!
 				</div>
 			)
 		}
-		*/}
 
 		{/*
 		SayHelloAsFunction.propTypes = {
@@ -64,7 +39,6 @@
 		}
 		*/}
 
-		{/*
 		const PropTypes = {
 			string(props, propName, componentName) {
 				if(typeof props[propName] !== 'string') {
@@ -72,14 +46,11 @@
 				}
 			}
 		}
-		*/}
 
-		{/*
 		SayHelloAsFunction.propTypes = {
 			firstName: PropTypes.string.isRequired,
 			lastName: PropTypes.string
 		}
-		*/}
 
 		{/*
 		SayHelloAsClass.propTypes = {
@@ -89,7 +60,7 @@
 		*/}
 
 		ReactDOM.render(
-			<SayHelloAsClass firstName={true} />,
+			<SayHelloAsFunction firstName={'true'} />,
 			document.getElementById('root')
 		)
 	</script>

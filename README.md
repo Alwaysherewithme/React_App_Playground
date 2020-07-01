@@ -2,6 +2,19 @@
 - [Start Learning React](https://egghead.io/courses/start-learning-react)
   - Use create-react-app to Setup a Simple React App
   - Write a "Hello World" React Component
+  ```
+  // function-based component
+  export default () => {
+    return (<div></div>)
+  }
+
+  // class-based component
+  export default class componentName extends React.Component {
+    render() {
+      return (<div></div>)
+    }
+  }
+  ```
   - Display Output in React with a Component's render Method
   - Set Properties on React Components
   - Manage React Component State with setState
